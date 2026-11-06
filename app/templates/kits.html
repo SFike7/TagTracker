@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block heading %}Bags{% endblock %}
+{% block content %}
+<form method="post" action="{{ url_for('kit_add') }}" class="row inline-form">
+  <input name="name" class="osk-input grow" placeholder="New bag name, e.g. Hockey bag" autocomplete="off" required>
+  <button class="btn btn-primary" type="submit">＋ Create</button>
+</form>
+<ul class="list">
+  {% for k in kits %}
+  <li class="kit-row">
+    <form method="post" action="{{ url_for('kit_rename', kit_id=k.id) }}" class="row grow">
+      <input name="name" class="osk-input grow" value="{{ k.name }}" autocomplete="off">
+      <button class="btn btn-small" type="submit">Rename</button>
+    </form>
+    <span class="list-sub">{{ k.n }} item{{ '' if k.n == 1 else 's' }}</span>
+    <a class="btn btn-small" href="{{ url_for('items', kit=k.id) }}">Items</a>
+    <a class="btn btn-small btn-primary" href="{{ url_for('track', kit=k.id) }}">Check</a>
+    <form method="post" action="{{ url_for('kit_delete', kit_id=k.id) }}"
+          onsubmit="return confirm('Delete bag {{ k.name }}? Items are kept.')">
+      <button class="btn btn-small btn-danger" type="submit" aria-label="Delete">✕</button>
+    </form>
+  </li>
+  {% else %}
+  <p class="hint">No bags yet. A bag is a checklist: every item assigned to it must be detected before you leave.</p>
+  {% endfor %}
+</ul>
+{% endblock %}

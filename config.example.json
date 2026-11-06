@@ -1,0 +1,7 @@
+{
+  "reader": "m100",
+  "serial_port": "/dev/ttyUSB0",
+  "baud": 115200,
+  "host": "127.0.0.1",
+  "port": 8080
+}

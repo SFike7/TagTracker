@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block heading %}Items{% endblock %}
+{% block content %}
+<div class="toolbar">
+  <div class="chips">
+    <a class="chip {{ 'on' if kit_id is none }}" href="{{ url_for('items') }}">All</a>
+    {% for k in kits %}
+    <a class="chip {{ 'on' if kit_id == k.id }}" href="{{ url_for('items', kit=k.id) }}">{{ k.name }} ({{ k.n }})</a>
+    {% endfor %}
+  </div>
+  <a class="btn btn-primary" href="{{ url_for('item_add', kit=kit_id or '') }}">＋ Add item</a>
+</div>
+{% if items %}
+<ul class="list">
+  {% for it in items %}
+  <li><a href="{{ url_for('item_edit', item_id=it.id) }}">
+    <span class="list-main">{{ it.name }}</span>
+    <span class="list-sub">{{ it.kit_name or 'No bag' }} · …{{ it.epc[-8:] }}</span>
+    <span class="list-go">›</span>
+  </a></li>
+  {% endfor %}
+</ul>
+{% else %}
+<p class="hint">No items yet. Tap “Add item”, hold a tag near the reader, and name it.</p>
+{% endif %}
+{% endblock %}

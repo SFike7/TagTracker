@@ -1,0 +1,7 @@
+# per-device files (never commit)
+.venv/
+config.json
+*.db
+__pycache__/
+.pytest_cache/
+*.tar.gz

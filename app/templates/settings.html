@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block heading %}Settings{% endblock %}
+{% block content %}
+<form method="post" class="form settings">
+  <div class="setting">
+    <div><b>Transmit power</b><small>dBm. Lower = shorter read range. Start at 20 and lower it until items
+      sitting <i>next to</i> the bag stop reading.</small></div>
+    <div class="stepper" data-step="1" data-min="10" data-max="26">
+      <button type="button" class="btn step-down">−</button>
+      <input name="tx_power" value="{{ s.tx_power }}" inputmode="decimal">
+      <button type="button" class="btn step-up">＋</button>
+    </div>
+  </div>
+  <div class="setting">
+    <div><b>“Weak” threshold</b><small>dBm. Reads weaker than this show amber: the item may be outside the bag.</small></div>
+    <div class="stepper" data-step="1" data-min="-100" data-max="-20">
+      <button type="button" class="btn step-down">−</button>
+      <input name="min_rssi" value="{{ s.min_rssi }}" inputmode="decimal">
+      <button type="button" class="btn step-up">＋</button>
+    </div>
+  </div>
+  <div class="setting">
+    <div><b>Missing after</b><small>seconds with no read before an item counts as missing.</small></div>
+    <div class="stepper" data-step="1" data-min="1" data-max="60">
+      <button type="button" class="btn step-down">−</button>
+      <input name="presence_timeout" value="{{ s.presence_timeout }}" inputmode="decimal">
+      <button type="button" class="btn step-up">＋</button>
+    </div>
+  </div>
+  <div class="setting">
+    <div><b>Smoothing</b><small>number of recent reads averaged (more = steadier, slower).</small></div>
+    <div class="stepper" data-step="1" data-min="1" data-max="30">
+      <button type="button" class="btn step-down">−</button>
+      <input name="smoothing" value="{{ s.smoothing }}" inputmode="numeric">
+      <button type="button" class="btn step-up">＋</button>
+    </div>
+  </div>
+  <div class="setting">
+    <div><b>Region</b><small>Must match your country's radio rules (US = 902–928 MHz, EU = 865–868 MHz).</small></div>
+    <select name="region">
+      {% for r in ['US', 'EU', 'KR', 'CN900', 'CN800'] %}
+      <option {{ 'selected' if s.region == r }}>{{ r }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div class="row actions"><button class="btn btn-primary" type="submit">Save settings</button></div>
+</form>
+
+<section class="info">
+  <h2 class="sub">Reader</h2>
+  <dl>
+    <dt>Type</dt><dd>{{ cfg.reader }}{% if cfg.reader == 'm100' %} on {{ cfg.serial_port }} @ {{ cfg.baud }}{% endif %}</dd>
+    <dt>Status</dt><dd>{{ reader_status }}</dd>
+    <dt>Info</dt><dd>{{ reader_info or '—' }}</dd>
+    <dt>Inventory cycles</dt><dd>{{ cycles }}</dd>
+    {% if error %}<dt>Last error</dt><dd class="err">{{ error }}</dd>{% endif %}
+  </dl>
+  <p class="hint">Reader type and serial port are set in <code>config.json</code> (needs a restart).</p>
+  <form method="post" action="{{ url_for('settings_clear') }}">
+    <button class="btn" type="submit">Clear read history</button>
+  </form>
+</section>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block heading %}Check a bag{% endblock %}
+{% block content %}
+{% if not kit %}
+<p class="hint">Create a bag and add items first.</p>
+<a class="btn btn-primary" href="{{ url_for('kits') }}">Create a bag</a>
+{% else %}
+<div class="toolbar">
+  <div class="chips">
+    {% for k in kits %}
+    <a class="chip {{ 'on' if k.id == kit.id }}" href="{{ url_for('track', kit=k.id) }}">{{ k.name }}</a>
+    {% endfor %}
+  </div>
+  <div class="tabs" role="tablist">
+    <button class="tab on" data-tab="check" role="tab">Checklist</button>
+    <button class="tab" data-tab="signal" role="tab">Signal</button>
+  </div>
+</div>
+
+<div class="summary" id="summary">Waiting for reader…</div>
+
+<section id="tab-check" class="tabpane">
+  <div class="grid" id="checklist"></div>
+</section>
+
+<section id="tab-signal" class="tabpane" hidden>
+  <p class="legend">RSSI in dBm (higher = closer). Dashed line = “weak” threshold
+    (<span id="thr"></span> dBm, change in Settings).</p>
+  <div id="signal"></div>
+  <h2 class="sub">Other tags in range</h2>
+  <div id="others" class="list"></div>
+</section>
+{% endif %}
+{% endblock %}
+{% block scripts %}{% if kit %}<script>TagTrack.initTrack({{ kit.id }}, "{{ url_for('item_add') }}");</script>{% endif %}{% endblock %}

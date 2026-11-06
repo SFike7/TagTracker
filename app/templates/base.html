@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>{% block title %}TagTrack{% endblock %}</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<header class="topbar">
+  {% if request.endpoint != 'home' %}
+  <a class="back" href="{% block back %}{{ url_for('home') }}{% endblock %}" aria-label="Back">‹</a>
+  {% else %}<span class="logo">◉</span>{% endif %}
+  <h1>{% block heading %}TagTrack{% endblock %}</h1>
+  <span class="status status-{{ reader_status }}" id="reader-status"
+        title="Reader status">{{ 'SIM' if reader_kind == 'mock' else 'UHF' }} · {{ reader_status }}</span>
+</header>
+{% with msgs = get_flashed_messages(with_categories=true) %}
+  {% if msgs %}<div class="flashes">{% for cat, m in msgs %}<div class="flash flash-{{ cat }}">{{ m }}</div>{% endfor %}</div>{% endif %}
+{% endwith %}
+<main>{% block content %}{% endblock %}</main>
+<div id="osk" class="osk" hidden></div>
+<script src="{{ url_for('static', filename='app.js') }}"></script>
+{% block scripts %}{% endblock %}
+</body>
+</html>

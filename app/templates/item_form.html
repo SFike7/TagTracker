@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block heading %}{{ 'Edit item' if item else 'Add item' }}{% endblock %}
+{% block back %}{{ url_for('items') }}{% endblock %}
+{% block content %}
+<form method="post" class="form" id="item-form">
+  {% if not item %}
+  <section class="scanbox" id="scanbox" data-preset="{{ epc }}">
+    <div class="scan-msg" id="scan-msg">Hold <b>one</b> tag close to the reader antenna…</div>
+    <div class="scan-tag" id="scan-tag"></div>
+    <div class="scan-meta" id="scan-meta"></div>
+    <div class="row">
+      <button type="button" class="btn" id="scan-lock" disabled>Use this tag</button>
+      <button type="button" class="btn btn-ghost" id="scan-reset" hidden>Scan again</button>
+    </div>
+  </section>
+  {% else %}
+  <div class="field"><label>Tag ID (EPC)</label><div class="mono">{{ item.epc }}</div></div>
+  {% endif %}
+  <input type="hidden" name="epc" id="epc" value="{{ epc }}">
+
+  <div class="field">
+    <label for="name">Name</label>
+    <input id="name" name="name" class="osk-input" autocomplete="off" required
+           value="{{ item.name if item else '' }}" placeholder="e.g. Skates">
+  </div>
+
+  <details class="quick">
+    <summary>Quick names</summary>
+    {% for group, names in quick.items() %}
+    <div class="quick-group"><span>{{ group }}</span>
+      {% for n in names %}<button type="button" class="chip" data-name="{{ n }}">{{ n }}</button>{% endfor %}
+    </div>
+    {% endfor %}
+  </details>
+
+  <div class="field">
+    <label>Bag</label>
+    <div class="chips">
+      <label class="chip radio"><input type="radio" name="kit_id" value="none" {{ 'checked' if not kit_id }}>None</label>
+      {% for k in kits %}
+      <label class="chip radio"><input type="radio" name="kit_id" value="{{ k.id }}" {{ 'checked' if kit_id == k.id }}>{{ k.name }}</label>
+      {% endfor %}
+      <a class="chip chip-ghost" href="{{ url_for('kits') }}">＋ New bag</a>
+    </div>
+  </div>
+
+  <div class="field">
+    <label for="notes">Notes <small>(tag placement, tag type…)</small></label>
+    <input id="notes" name="notes" class="osk-input" autocomplete="off" value="{{ item.notes if item else '' }}"
+           placeholder="e.g. on-metal tag under grip">
+  </div>
+
+  <div class="row actions">
+    {% if item %}
+      <button class="btn btn-primary" type="submit">Save</button>
+    {% else %}
+      <button class="btn btn-primary" type="submit" id="save-btn">Save</button>
+      <button class="btn" type="submit" name="another" value="1">Save &amp; add another</button>
+    {% endif %}
+  </div>
+</form>
+{% if item %}
+<form method="post" action="{{ url_for('item_delete', item_id=item.id) }}" class="danger-zone"
+      onsubmit="return confirm('Delete {{ item.name }}?')">
+  <button class="btn btn-danger" type="submit">Delete item</button>
+</form>
+{% endif %}
+{% endblock %}
+{% block scripts %}{% if not item %}<script>TagTrack.initScan();</script>{% endif %}
+<script>TagTrack.initQuickNames();</script>{% endblock %}

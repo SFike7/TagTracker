@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="tiles">
+  <a class="tile tile-primary" href="{{ url_for('track') }}">
+    <span class="tile-icon">✓</span><span class="tile-label">Check a bag</span>
+    <span class="tile-sub">Testing &amp; tracking screen</span>
+  </a>
+  <a class="tile" href="{{ url_for('items') }}">
+    <span class="tile-icon">🏷</span><span class="tile-label">Items</span>
+    <span class="tile-sub">{{ n_items }} tagged</span>
+  </a>
+  <a class="tile" href="{{ url_for('kits') }}">
+    <span class="tile-icon">🎒</span><span class="tile-label">Bags</span>
+    <span class="tile-sub">{{ kits|length }} bag{{ '' if kits|length == 1 else 's' }}</span>
+  </a>
+  <a class="tile" href="{{ url_for('settings') }}">
+    <span class="tile-icon">⚙</span><span class="tile-label">Settings</span>
+    <span class="tile-sub">Power, thresholds, reader</span>
+  </a>
+</div>
+{% if not kits %}
+<p class="hint">Start here: create a bag (e.g. “Hockey bag”), then add items by scanning their tags.</p>
+{% endif %}
+{% endblock %}
