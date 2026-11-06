@@ -37,7 +37,8 @@ body.osk-open main { padding-bottom: 260px; }
   min-height: 150px; display: flex; flex-direction: column; justify-content: center; gap: 4px; }
 .tile:active { background: var(--panel2); }
 .tile-primary { background: #133052; border-color: #24558a; }
-.tile-icon { font-size: 30px; }
+.tile-icon { font-size: 30px; line-height: 1; }
+.ico { width: 32px; height: 32px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 .tile-label { font-size: 22px; font-weight: 650; }
 .tile-sub { color: var(--muted); font-size: 14px; }
 

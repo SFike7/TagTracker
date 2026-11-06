@@ -40,7 +40,7 @@
       {% for k in kits %}
       <label class="chip radio"><input type="radio" name="kit_id" value="{{ k.id }}" {{ 'checked' if kit_id == k.id }}>{{ k.name }}</label>
       {% endfor %}
-      <a class="chip chip-ghost" href="{{ url_for('kits') }}">＋ New bag</a>
+      <a class="chip chip-ghost" href="{{ url_for('kits') }}">+ New bag</a>
     </div>
   </div>
 

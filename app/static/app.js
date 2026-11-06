@@ -35,7 +35,7 @@
   function drawOsk() {
     osk.innerHTML = ROWS.map((row) => '<div class="osk-row">' + row.map((k) => {
       const cls = k === "space" ? "space" : k === "Done" ? "wide done" : (k === "⇧" || k === "⌫") ? "wide" : "";
-      const label = k === "space" ? "" : (shift && k.length === 1 ? k.toUpperCase() : k);
+      const label = k === "space" ? "" : k === "⇧" ? "Shift" : k === "⌫" ? "Delete" : (shift && k.length === 1 ? k.toUpperCase() : k);
       return `<button type="button" class="${cls}" data-k="${esc(k)}">${esc(label)}</button>`;
     }).join("") + "</div>").join("");
   }

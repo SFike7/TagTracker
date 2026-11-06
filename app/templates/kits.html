@@ -3,7 +3,7 @@
 {% block content %}
 <form method="post" action="{{ url_for('kit_add') }}" class="row inline-form">
   <input name="name" class="osk-input grow" placeholder="New bag name, e.g. Hockey bag" autocomplete="off" required>
-  <button class="btn btn-primary" type="submit">＋ Create</button>
+  <button class="btn btn-primary" type="submit">+ Create</button>
 </form>
 <ul class="list">
   {% for k in kits %}
@@ -17,7 +17,7 @@
     <a class="btn btn-small btn-primary" href="{{ url_for('track', kit=k.id) }}">Check</a>
     <form method="post" action="{{ url_for('kit_delete', kit_id=k.id) }}"
           onsubmit="return confirm('Delete bag {{ k.name }}? Items are kept.')">
-      <button class="btn btn-small btn-danger" type="submit" aria-label="Delete">✕</button>
+      <button class="btn btn-small btn-danger" type="submit" aria-label="Delete">×</button>
     </form>
   </li>
   {% else %}

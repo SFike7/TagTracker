@@ -6,11 +6,11 @@
     <span class="tile-sub">Testing &amp; tracking screen</span>
   </a>
   <a class="tile" href="{{ url_for('items') }}">
-    <span class="tile-icon">🏷</span><span class="tile-label">Items</span>
+    <span class="tile-icon"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12V4a1 1 0 0 1 1-1h8l9 9-9 9z"/><circle cx="7.5" cy="7.5" r="1.5"/></svg></span><span class="tile-label">Items</span>
     <span class="tile-sub">{{ n_items }} tagged</span>
   </a>
   <a class="tile" href="{{ url_for('kits') }}">
-    <span class="tile-icon">🎒</span><span class="tile-label">Bags</span>
+    <span class="tile-icon"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="7" width="16" height="14" rx="3"/><path d="M9 7V5a3 3 0 0 1 6 0v2M4 13h16"/></svg></span><span class="tile-label">Bags</span>
     <span class="tile-sub">{{ kits|length }} bag{{ '' if kits|length == 1 else 's' }}</span>
   </a>
   <a class="tile" href="{{ url_for('settings') }}">
