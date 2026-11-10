@@ -38,7 +38,8 @@ def _kit_id(value):
 
 @app.context_processor
 def inject_globals():
-    return {"reader_status": scanner.status, "reader_kind": CFG["reader"]}
+    return {"reader_status": scanner.status, "reader_kind": CFG["reader"],
+            "text_scale": db.settings()["text_scale"]}
 
 
 # -- Menu ----------------------------------------------------------------
@@ -172,6 +173,8 @@ def settings_post():
             except ValueError:
                 flash(f"Invalid value for {key}.", "error")
                 continue
+            if key == "text_scale":
+                value = round(min(3.0, max(0.8, value)), 2)
             db.save_setting(key, value)
             if key == "tx_power" and value != current[key]:
                 scanner.request("power", value)

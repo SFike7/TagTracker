@@ -31,6 +31,7 @@ DEFAULT_SETTINGS = {
     "presence_timeout": 5.0,   # seconds without a read before an item counts as missing
     "min_rssi": -75.0,         # dBm. Weaker than this = "weak" (maybe outside the bag)
     "smoothing": 5,            # number of recent reads averaged for the RSSI value
+    "text_scale": 1.5,         # text and icon size on the screens (1.0 = original size)
 }
 
 

@@ -3,6 +3,15 @@
 {% block content %}
 <form method="post" class="form settings">
   <div class="setting">
+    <div><b>Text size</b><small>Makes text and icons bigger or smaller. 1.0 = original size.
+      Tap “Save settings” to apply.</small></div>
+    <div class="stepper" data-step="0.1" data-min="0.8" data-max="3">
+      <button type="button" class="btn step-down">−</button>
+      <input name="text_scale" value="{{ s.text_scale }}" inputmode="decimal">
+      <button type="button" class="btn step-up">+</button>
+    </div>
+  </div>
+  <div class="setting">
     <div><b>Transmit power</b><small>dBm. Lower = shorter read range. Start at 20 and lower it until items
       sitting <i>next to</i> the bag stop reading.</small></div>
     <div class="stepper" data-step="1" data-min="10" data-max="26">
